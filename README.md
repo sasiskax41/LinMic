@@ -2,6 +2,13 @@
 
 LinMic is a Linux-first open-source alternative to WO Mic. It turns an Android phone microphone into a Linux microphone source that apps such as Discord, OBS, browsers, and games can discover automatically through PipeWire.
 
+#### Current State
+
+LinMic prototype is currently functional over USB using ADB forwarding and PipeWire virtual microphone integration.
+
+Basic Android ↔ Linux audio streaming is working.
+
+
 ## Goals
 
 - Android microphone capture with `AudioRecord`
