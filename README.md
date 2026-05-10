@@ -2,105 +2,96 @@
 
 LinMic is a Linux-first open-source alternative to WO Mic. It turns an Android phone microphone into a Linux microphone source that apps such as Discord, OBS, browsers, and games can discover automatically through PipeWire.
 
-#### Current State
+## Current State
 
 LinMic prototype is currently functional over USB using ADB forwarding and PipeWire virtual microphone integration.
 
 Basic Android ↔ Linux audio streaming is working.
 
+# LinMic
 
-## Goals
+LinMic is an open-source Linux-first phone microphone application.
 
-- Android microphone capture with `AudioRecord`
-- USB-first streaming through ADB port forwarding
-- Linux virtual microphone exposed through PipeWire/PipeWire-Pulse
-- Low-latency PCM pipeline with room for Opus later
-- PySide6 desktop UI with tray integration and dark mode
-- Clean, modular Python client architecture
-- Kotlin Android app with a foreground microphone service
+It allows you to use your Android phone as a microphone on Linux using USB and PipeWire.
 
-## Architecture
+## Current Features
 
-```text
-Android AudioRecord
-  -> foreground streaming service
-  -> localhost TCP server on Android
-  -> ADB port forward over USB
-  -> Linux asyncio USB transport
-  -> optional DSP chain: volume, RNNoise, echo cancellation
-  -> PipeWire virtual microphone backend
-  -> Discord / OBS / games
-```
+* Android microphone streaming prototype
+* PipeWire virtual microphone
+* USB support via ADB
+* Discord and OBS compatibility
+* Linux desktop client
+* Basic GUI
+* Open-source
 
-The first Linux backend uses `pactl load-module module-pipe-source` against PipeWire-Pulse. On modern Linux desktops this creates a real PipeWire source while staying cross-distro and simple to package. A native `libpipewire` backend can be added behind the same `AudioSink` interface.
+## Planned Features
 
-## Repository Layout
+* Better audio quality
+* Lower latency
+* Improved UI
+* Auto reconnect
+* Noise suppression
 
-```text
+## Project Structure
+
+```text id="k5g2zn"
 LinMic/
-  linux-client/          Python + PySide6 Linux client
-  android-app/           Kotlin Android starter app
-  packaging/             Arch and Debian package metadata
-  docs/                  Architecture and development notes
-  scripts/               Helper scripts
+├── android-app/     # Android application
+├── linux-client/    # Linux desktop client
+├── docs/            # Documentation
+├── packaging/       # Linux packaging files
+└── scripts/         # Helper scripts
 ```
 
-## Linux Quick Start
+## Tech Stack
 
-Dependencies:
+### Linux Client
 
-- Python 3.11+
-- PipeWire and PipeWire-Pulse
-- `pactl`
-- Android platform tools: `adb`
+* Python
+* PipeWire
+* PySide6
+* asyncio
 
-```bash
+### Android App
+
+* Kotlin
+* Android Studio
+* AudioRecord API
+* Foreground services
+
+## Building
+
+### Linux Client
+
+```bash id="b7v2kn"
 cd linux-client
 python -m venv .venv
 source .venv/bin/activate
-pip install -e .
-linmic
+python -m pip install .
+python -m linmic
 ```
 
-Connect an Android phone over USB, enable USB debugging, start the LinMic Android app, then press **Connect** in the Linux client.
+### Android App
 
-## Android Quick Start
+Open the `android-app` folder in Android Studio and run the project on your Android device.
 
-Open `android-app/` in Android Studio and run the `app` configuration on a device. The starter service captures 48 kHz mono PCM16 audio and serves framed packets on `127.0.0.1:38473` for ADB forwarding.
+USB debugging must be enabled on the phone.
 
-CLI build:
+## Status
 
-```bash
-cd android-app
-./gradlew assembleDebug
-```
-
-## Packaging
-
-Arch:
-
-```bash
-cd packaging/arch
-makepkg -si
-```
-
-Debian:
-
-```bash
-cd packaging/debian
-dpkg-buildpackage -us -uc
-```
-
-## Roadmap
-
-- Native PipeWire backend
-- RNNoise integration
-- Echo cancellation through WebRTC Audio Processing or PipeWire filter-chain
-- Wi-Fi mode with QR pairing
-- Bluetooth mode
-- Opus codec
-- Multi-device routing
+Early development / alpha
 
 ## License
 
-MIT
+MIT License
+
+## Screenshots
+
+### Linux Client
+
+![Linux Client](screenshots/linux-client.png)
+
+### Android App
+
+![Android App](screenshots/android-app.jpg)
+![Android App](screenshots/android-app2.jpg)
