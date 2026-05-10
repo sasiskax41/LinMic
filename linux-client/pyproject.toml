@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "linmic"
+version = "0.1.0"
+description = "Use an Android phone as a Linux PipeWire microphone"
+readme = "README.md"
+requires-python = ">=3.11"
+license = {text = "MIT"}
+authors = [{name = "LinMic contributors"}]
+dependencies = [
+  "PySide6>=6.7",
+]
+
+[project.optional-dependencies]
+dsp = ["numpy>=1.26"]
+audio = ["sounddevice>=0.4.7", "pyaudio>=0.2.14"]
+dev = ["pytest>=8", "ruff>=0.5"]
+
+[project.scripts]
+linmic = "linmic.__main__:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"

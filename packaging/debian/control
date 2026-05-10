@@ -1,0 +1,14 @@
+Source: linmic
+Section: sound
+Priority: optional
+Maintainer: LinMic contributors <maintainers@linmic.org>
+Build-Depends: debhelper-compat (= 13), dh-python, pybuild-plugin-pyproject, python3-all, python3-setuptools, python3-wheel
+Standards-Version: 4.7.0
+Rules-Requires-Root: no
+
+Package: linmic
+Architecture: all
+Depends: ${python3:Depends}, ${misc:Depends}, python3-pyside6, pipewire, pipewire-pulse, pulseaudio-utils, adb
+Description: Use an Android phone as a PipeWire microphone
+ LinMic receives low-latency microphone audio from an Android phone over USB
+ and exposes it as a virtual microphone source through PipeWire.

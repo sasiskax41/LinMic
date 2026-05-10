@@ -1,0 +1,25 @@
+# Maintainer: LinMic contributors
+pkgname=linmic
+pkgver=0.1.0
+pkgrel=1
+pkgdesc="Use an Android phone as a PipeWire microphone on Linux"
+arch=("any")
+url="https://github.com/linmic/linmic"
+license=("MIT")
+depends=("python" "python-pyside6" "pipewire" "pipewire-pulse" "libpulse" "android-tools")
+makedepends=("python-build" "python-installer" "python-wheel")
+source=("$pkgname-$pkgver.tar.gz")
+sha256sums=("SKIP")
+
+build() {
+  cd "$srcdir/$pkgname-$pkgver/linux-client"
+  python -m build --wheel --no-isolation
+}
+
+package() {
+  cd "$srcdir/$pkgname-$pkgver/linux-client"
+  python -m installer --destdir="$pkgdir" dist/*.whl
+  install -Dm644 "$srcdir/$pkgname-$pkgver/LICENSE" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+  install -Dm644 "$srcdir/$pkgname-$pkgver/packaging/linux/org.linmic.LinMic.desktop" \
+    "$pkgdir/usr/share/applications/org.linmic.LinMic.desktop"
+}

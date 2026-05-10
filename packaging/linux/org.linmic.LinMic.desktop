@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=LinMic
+Comment=Use an Android phone as a Linux microphone
+Exec=linmic
+Icon=audio-input-microphone
+Categories=Audio;Utility;
+Terminal=false
